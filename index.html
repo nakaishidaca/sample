@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>大学レベル 生化学クイズ</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.6; margin: 20px; }
+    h1 { color: #2c3e50; }
+    .question { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .choices label { display: block; }
+    .result { margin-top: 5px; font-weight: bold; }
+    button { margin-top: 20px; padding: 8px 16px; }
+  </style>
+</head>
+<body>
+  <h1>大学レベル 生化学クイズ</h1>
+  <p>選択肢から正しいものを選んでください。</p>
+
+  <!-- Q1 -->
+  <div class="question" data-answer="d">
+    <p><strong>問1.</strong> クエン酸回路において、NADH が生成される反応として正しいのはどれか。</p>
+    <div class="choices">
+      <label><input type="radio" name="q1" value="a"> クエン酸 → イソクエン酸</label>
+      <label><input type="radio" name="q1" value="b"> コハク酸 → フマル酸</label>
+      <label><input type="radio" name="q1" value="c"> フマル酸 → リンゴ酸</label>
+      <label><input type="radio" name="q1" value="d"> イソクエン酸 → α-ケトグルタル酸</label>
+    </div>
+    <div class="result"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question" data-answer="b">
+    <p><strong>問2.</strong> 酵素反応における競合阻害の特徴として正しいものはどれか。</p>
+    <div class="choices">
+      <label><input type="radio" name="q2" value="a"> Vmax が低下し、Km は変化しない</label>
+      <label><input type="radio" name="q2" value="b"> Km が上昇し、Vmax は変化しない</label>
+      <label><input type="radio" name="q2" value="c"> Km と Vmax の両方が低下する</label>
+      <label><input type="radio" name="q2" value="d"> 阻害剤は酵素-基質複合体にのみ結合する</label>
+    </div>
+    <div class="result"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question" data-answer="c">
+    <p><strong>問3.</strong> β酸化において、1回のサイクルで生成されるものとして正しい組み合わせはどれか。</p>
+    <div class="choices">
+      <label><input type="radio" name="q3" value="a"> 1 NADH、1 ATP、1 アセチルCoA</label>
+      <label><input type="radio" name="q3" value="b"> 1 FADH₂、1 ATP、1 アセチルCoA</label>
+      <label><input type="radio" name="q3" value="c"> 1 NADH、1 FADH₂、1 アセチルCoA</label>
+      <label><input type="radio" name="q3" value="d"> 2 NADH、1 FADH₂、1 アセチルCoA</label>
+    </div>
+    <div class="result"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question" data-answer="a">
+    <p><strong>問4.</strong> DNA 複製において、ラギング鎖の合成に必須である酵素はどれか。</p>
+    <div class="choices">
+      <label><input type="radio" name="q4" value="a"> DNA リガーゼ</label>
+      <label><input type="radio" name="q4" value="b"> トポイソメラーゼ I</label>
+      <label><input type="radio" name="q4" value="c"> RNase H</label>
+      <label><input type="radio" name="q4" value="d"> テロメラーゼ</label>
+    </div>
+    <div class="result"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question" data-answer="d">
+    <p><strong>問5.</strong> 酸化的リン酸化において、ATP 合成酵素（Complex V）の駆動力となるものはどれか。</p>
+    <div class="choices">
+      <label><input type="radio" name="q5" value="a"> NADH の直接的な電子供与</label>
+      <label><input type="radio" name="q5" value="b"> FADH₂ の直接的な電子供与</label>
+      <label><input type="radio" name="q5" value="c"> ミトコンドリア内膜の電位差のみ</label>
+      <label><input type="radio" name="q5" value="d"> プロトン濃度勾配（プロトン駆動力）</label>
+    </div>
+    <div class="result"></div>
+  </div>
+
+  <button id="checkBtn">採点する</button>
+  <p id="score"></p>
+
+  <script>
+    document.getElementById('checkBtn').addEventListener('click', function () {
+      const questions = document.querySelectorAll('.question');
+      let correctCount = 0;
+
+      questions.forEach((q, index) => {
+        const answer = q.getAttribute('data-answer');
+        const name = 'q' + (index + 1);
+        const selected = document.querySelector('input[name="' + name + '"]:checked');
+        const resultDiv = q.querySelector('.result');
+
+        if (!selected) {
+          resultDiv.textContent = '未回答です。';
+          resultDiv.style.color = 'orange';
+        } else if (selected.value === answer) {
+          resultDiv.textContent = '正解！';
+          resultDiv.style.color = 'green';
+          correctCount++;
+        } else {
+          resultDiv.textContent = '不正解。正解は「' + answer.toUpperCase() + '」です。';
+          resultDiv.style.color = 'red';
+        }
+      });
+
+      document.getElementById('score').textContent =
+        '正解数：' + correctCount + ' / ' + questions.length;
+    });
+  </script>
+</body>
+</html>
